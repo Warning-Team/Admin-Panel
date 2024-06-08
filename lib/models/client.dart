@@ -4,6 +4,7 @@ part 'client.g.dart';
 
 @JsonSerializable()
 class Client {
+  
   int id;
   String stir;
   String compName;
