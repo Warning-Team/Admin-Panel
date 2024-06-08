@@ -8,8 +8,8 @@ class User {
   String name;
   String surname;
   String phone;
-  String town;
-  String pasport;
+  String workPlace;
+  String login;
   String password;
   String role;
 
@@ -18,8 +18,8 @@ class User {
     required this.name,
     required this.surname,
     required this.phone,
-    required this.town,
-    required this.pasport,
+    required this.workPlace,
+    required this.login,
     required this.password,
     required this.role,
   });
