@@ -20,8 +20,8 @@ class Client {
     required this.phoneNumber,
   });
 
-  factory Client.fromJson(Map<String, dynamic> json) {
-    return _$ClientFromJson(json);
+  factory Client.fromJson(String apiId, Map<String, dynamic> json) {
+    return _$ClientFromJson(apiId,json);
   }
 
   Map<String, dynamic> toJson() {

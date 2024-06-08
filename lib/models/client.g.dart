@@ -6,9 +6,9 @@ part of 'client.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Client _$ClientFromJson(Map<String, dynamic> json) => Client(
+Client _$ClientFromJson(String apiId, Map<String, dynamic> json) => Client(
       id: (json['id'] as num).toInt(),
-      apiId: json['apiId'] as String,
+      apiId: apiId,
       stir: json['stir'] as String,
       companyName: json['compName'] as String,
       eId: (json['eId'] as num).toInt(),
