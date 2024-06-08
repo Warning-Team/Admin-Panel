@@ -4,11 +4,7 @@ part 'client.g.dart';
 
 @JsonSerializable()
 class Client {
-<<<<<<< HEAD
-  
-=======
- String apiId;
->>>>>>> 20389ab6ed5dfca4635f186d57396848568e8341
+  String apiId;
   int id;
   String stir;
   String companyName;
