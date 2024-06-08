@@ -17,7 +17,6 @@ Client _$ClientFromJson(Map<String, dynamic> json) => Client(
 
 Map<String, dynamic> _$ClientToJson(Client instance) => <String, dynamic>{
       'id': instance.id,
-      'apiId': instance.apiId,
       'stir': instance.stir,
       'compName': instance.companyName,
       'eId': instance.eId,
