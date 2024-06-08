@@ -62,9 +62,12 @@ class _UsersScreenState extends State<UsersScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(onPressed: () {
-        AddUser();
-      }),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          showDialog(context: context, builder: (context) => const AddUser());
+        },
+        child: const Icon(Icons.add),
+      ),
     );
   }
 }

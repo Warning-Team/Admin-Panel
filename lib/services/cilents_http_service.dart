@@ -12,6 +12,7 @@ class CilentsHttpService {
     Map datas = jsonDecode(response.body);
     datas.forEach((key, value) {
       Client client = Client.fromJson(key, value);
+      print(client.apiId);
       clients.add(client);
     });
     return clients;

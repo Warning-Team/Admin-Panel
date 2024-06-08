@@ -1,4 +1,6 @@
 import 'package:admin_panel/controllers/cilents_controller.dart';
+import 'package:admin_panel/views/screens/add_cilent_screen.dart';
+import 'package:admin_panel/views/widgets/client_item/client_item.dart';
 import 'package:flutter/material.dart';
 
 class ClientsScreen extends StatefulWidget {
@@ -23,23 +25,40 @@ class _ClientsScreenState extends State<ClientsScreen> {
         future: cilentsController.cilentsHttpService.getData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
-            Center(
+            return Center(
               child: Image.asset('assets/gifs/loading.gif'),
             );
           }
           if (snapshot.hasError) {
-            return const Center(
-              child: Text("Malumot olishda xato  bor"),
+            return Center(
+              child: Text(snapshot.error.toString()),
             );
           }
 
-          if (!snapshot.hasData) {
+          if (snapshot.data == null || snapshot.data!.isEmpty) {
             return const Center(
-              child: Text("Malumot yo'q"),
+              child: Text("Malumot mavjud emas"),
             );
           }
-          return Center();
+
+          return ListView.builder(
+              padding: const EdgeInsets.all(10),
+              itemCount: snapshot.data!.length,
+              itemBuilder: (context, index) {
+                return ClientItem(client: snapshot.data![index]);
+              });
         },
+      ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () {
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => const AddCilentScreen(),
+            ),
+          );
+        },
+        child: const Icon(Icons.add),
       ),
     );
   }

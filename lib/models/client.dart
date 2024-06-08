@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:json_annotation/json_annotation.dart';
 
 part 'client.g.dart';
@@ -5,11 +7,11 @@ part 'client.g.dart';
 @JsonSerializable()
 class Client {
   String apiId;
-  int id;
+  String id;
   String stir;
   String companyName;
   String phoneNumber;
-  int eId;
+  String eId;
 
   Client({
     required this.id,
@@ -21,7 +23,7 @@ class Client {
   });
 
   factory Client.fromJson(String apiId, Map<String, dynamic> json) {
-    return _$ClientFromJson(apiId,json);
+    return _$ClientFromJson(apiId, json);
   }
 
   Map<String, dynamic> toJson() {
