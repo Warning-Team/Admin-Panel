@@ -17,6 +17,9 @@ class _UsersScreenState extends State<UsersScreen> {
         ),
         backgroundColor: Colors.blue.shade700,
       ),
+      body: Column(
+        
+      ),
     );
   }
 }
