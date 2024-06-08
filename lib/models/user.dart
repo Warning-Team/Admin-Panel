@@ -8,7 +8,7 @@ class User {
   String apiId;
   String name;
   String surname;
-  String phone;
+  String phoneNumber;
   String workPlace;
   String login;
   String password;
@@ -19,7 +19,7 @@ class User {
     required this.apiId,
     required this.name,
     required this.surname,
-    required this.phone,
+    required this.phoneNumber,
     required this.workPlace,
     required this.login,
     required this.password,
