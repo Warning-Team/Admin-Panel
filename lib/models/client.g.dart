@@ -11,6 +11,7 @@ Client _$ClientFromJson(Map<String, dynamic> json) => Client(
       stir: json['stir'] as String,
       compName: json['compName'] as String,
       eId: (json['eId'] as num).toInt(),
+      phoneNumber: (json['phoneNumber'] as String),
     );
 
 Map<String, dynamic> _$ClientToJson(Client instance) => <String, dynamic>{
@@ -18,4 +19,5 @@ Map<String, dynamic> _$ClientToJson(Client instance) => <String, dynamic>{
       'stir': instance.stir,
       'compName': instance.compName,
       'eId': instance.eId,
+      'phoneNumber': instance.phoneNumber,
     };

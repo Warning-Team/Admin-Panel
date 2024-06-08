@@ -7,6 +7,7 @@ class Client {
   int id;
   String stir;
   String compName;
+  String phoneNumber;
   int eId;
 
   Client({
@@ -14,6 +15,7 @@ class Client {
     required this.stir,
     required this.compName,
     required this.eId,
+    required this.phoneNumber,
   });
 
   factory Client.fromJson(Map<String, dynamic> json) {
