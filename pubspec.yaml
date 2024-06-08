@@ -38,6 +38,7 @@ dependencies:
   flutter_screenutil: ^5.9.3
   gap: ^3.0.1
   json_annotation: ^4.9.0
+  http: ^1.2.1
 
 dev_dependencies:
   flutter_test:
