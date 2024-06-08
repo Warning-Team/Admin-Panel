@@ -22,15 +22,17 @@ class _ClientsScreenState extends State<ClientsScreen> {
       body: FutureBuilder(
         future: cilentsController.cilentsHttpService.getData(),
         builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            Center(
+              child: Image.asset('assets/gifs/loading.gif'),
+            );
+          }
           if (snapshot.hasError) {
             return const Center(
               child: Text("Malumot olishda xato  bor"),
             );
           }
 
-
-
-          
           if (!snapshot.hasData) {
             return const Center(
               child: Text("Malumot yo'q"),
