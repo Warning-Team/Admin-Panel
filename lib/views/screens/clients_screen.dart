@@ -27,6 +27,10 @@ class _ClientsScreenState extends State<ClientsScreen> {
               child: Text("Malumot olishda xato  bor"),
             );
           }
+
+
+
+          
           if (!snapshot.hasData) {
             return const Center(
               child: Text("Malumot yo'q"),
