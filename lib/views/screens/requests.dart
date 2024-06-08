@@ -12,7 +12,7 @@ class _RequestsScreenState extends State<RequestsScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-           title: Text(
+        title: Text(
           "Requests",
         ),
         backgroundColor: Colors.blue.shade700,
