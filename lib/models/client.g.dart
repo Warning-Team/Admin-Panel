@@ -8,8 +8,9 @@ part of 'client.dart';
 
 Client _$ClientFromJson(Map<String, dynamic> json) => Client(
       id: (json['id'] as num).toInt(),
+      apiId: json['apiId'] as String,
       stir: json['stir'] as String,
-      compName: json['compName'] as String,
+      companyName: json['compName'] as String,
       eId: (json['eId'] as num).toInt(),
       phoneNumber: (json['phoneNumber'] as String),
     );
@@ -17,7 +18,7 @@ Client _$ClientFromJson(Map<String, dynamic> json) => Client(
 Map<String, dynamic> _$ClientToJson(Client instance) => <String, dynamic>{
       'id': instance.id,
       'stir': instance.stir,
-      'compName': instance.compName,
+      'compName': instance.companyName,
       'eId': instance.eId,
       'phoneNumber': instance.phoneNumber,
     };
