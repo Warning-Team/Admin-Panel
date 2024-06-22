@@ -1,5 +1,6 @@
 import 'package:admin_panel/controllers/users_controller.dart';
-import 'package:admin_panel/views/widgets/user_item/add_user.dart';
+import 'package:admin_panel/views/widgets/user_items/add_user.dart';
+
 import 'package:flutter/material.dart';
 
 class UsersScreen extends StatefulWidget {
@@ -62,12 +63,7 @@ class _UsersScreenState extends State<UsersScreen> {
           );
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          showDialog(context: context, builder: (context) => const AddUser());
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: AddUser(),
     );
   }
 }
