@@ -11,7 +11,7 @@ class UsersController {
       surname: "Allaberdiyev",
       phoneNumber: "+998911234567",
       workPlace: "Tashkent",
-      login: "AD1234566",
+      login: "AD1234566",   
       password: "Samandar",
       role: "Employee",
     ),
