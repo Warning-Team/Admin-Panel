@@ -1,5 +1,7 @@
 import 'package:admin_panel/models/user.dart';
 import 'package:admin_panel/utils/inputvalidatsiya.dart';
+import 'package:admin_panel/utils/make_user_to_add.dart';
+import 'package:admin_panel/utils/user_input_validation.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -23,9 +25,29 @@ class _AddUserState extends State<AddUser> {
       login: "",
       password: "",
       role: "");
+
+    saveUser(){
+     final makeUser = MakeUserToAdd();
+      _formKey.currentState!.save();
+      makeUser.makeUser(user);
+                            Navigator.pop(context);
+                  showDialog(context: context, builder: (ctx){
+                    return AlertDialog(
+                      content: Center(
+                        child: Column(
+                          children: [
+                            
+                          ],
+                        ),
+                      ),
+                    );
+
+                  });
+    }
   @override
   Widget build(BuildContext context) {
     return FloatingActionButton(
+      backgroundColor: Colors.blueAccent,
       onPressed: () {
         showModalBottomSheet(
           context: context,
@@ -57,8 +79,8 @@ class _AddUserState extends State<AddUser> {
                           labelText: 'Ism',
                         ),
                         validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Hodim ismini kriting";
+                          if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            return "Hodim ismini to'g'ri kriting";
                           } else {
                             return null;
                           }
@@ -77,8 +99,8 @@ class _AddUserState extends State<AddUser> {
                           labelText: 'Familiya',
                         ),
                         validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Hodim familyasini kriting";
+                          if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            return "Hodim familyasini to'g'ri kriting";
                           } else {
                             return null;
                           }
@@ -87,24 +109,60 @@ class _AddUserState extends State<AddUser> {
                           user.surname = value!;
                         },
                       ),
-                       SizedBox(height: 16.h),
+                      SizedBox(height: 16.h),
+                      TextFormField(
+                        keyboardType: TextInputType.number,
+                        decoration: const InputDecoration(
+                          
+                          border: OutlineInputBorder(),
+                          labelText: 'Hodim uchun ID kiriting (12345)',
+                        ),
+                        validator: (value) {
+                          if (UserInputValidation().checkId(value!) != 1) {
+                            return "Ushbu ID boshqa foydalanuvchida ishlatilgan";
+                          }
+                          if (value == null || value.trim().isEmpty || value.length != 5 || !Validate.isInteger(value)) {
+                            return "Hodim ID' sini to'g'ri kriting";
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          user.id = int.parse(value!);
+                        },
+                      ),
+                      SizedBox(height: 16.h),
                       TextFormField(
                         decoration: const InputDecoration(
-                          prefixIcon: Icon(
-                            CupertinoIcons.person_fill,
-                          ),
                           border: OutlineInputBorder(),
                           labelText: 'Hodim mansabini kiriting',
                         ),
                         validator: (value) {
-                          if (value == null || value.trim().isEmpty) {
-                            return "Hodim mansabini kriting";
+                          if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            return "Hodim mansabini to'g'ri kriting";
                           } else {
                             return null;
                           }
                         },
                         onSaved: (value) {
                           user.surname = value!;
+                        },
+                      ),
+                      SizedBox(height: 16.h),
+                      TextFormField(
+                        decoration: const InputDecoration(
+                          border: OutlineInputBorder(),
+                          labelText: 'Tumanni kiriting',
+                        ),
+                        validator: (value) {
+                          if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            return "Ish joyini to'g'ri kriting";
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) {
+                          user.workPlace = value!;
                         },
                       ),
                       SizedBox(height: 16.h),
@@ -122,7 +180,7 @@ class _AddUserState extends State<AddUser> {
                             return null;
                           }
                         },
-                        onSaved: (value) { 
+                        onSaved: (value) {
                           user.login = value!;
                         },
                       ),
@@ -137,7 +195,8 @@ class _AddUserState extends State<AddUser> {
                               value.trim().isEmpty ||
                               !Validate.phone(value)) {
                             return "Telefon raqam kriting";
-                          } else {
+                          }
+                           else {
                             return null;
                           }
                         },
@@ -145,15 +204,19 @@ class _AddUserState extends State<AddUser> {
                           user.phoneNumber = value!;
                         },
                       ),
-                      const SizedBox(height: 16),
+                      const SizedBox(height: 36),
                       ElevatedButton(
                         onPressed: () {
                           if (_formKey.currentState!.validate()) {
-                            _formKey.currentState!.save();
-                            Navigator.pop(context);
+                            saveUser();
                           }
                         },
-                        child: const Text("Saqlash"),
+                        child: const Text(
+                          "Saqlash",
+                          style: TextStyle(
+                            color: Colors.black,
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -163,7 +226,11 @@ class _AddUserState extends State<AddUser> {
           },
         );
       },
-      child: const Icon(Icons.add),
+      child: const Icon(
+        Icons.add,
+        color: Colors.white,
+        size: 28,
+      ),
     );
   }
 }

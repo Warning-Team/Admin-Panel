@@ -17,6 +17,24 @@ abstract class Validate {
     return regExp.hasMatch(phoneNumber);
   }
 
+   static bool isInteger(String str) {
+    if (str.isEmpty) {
+      return false;
+    }
+    final number = int.tryParse(str);
+    return number != null;
+  }
+  
+  static bool isLengthGreaterThanFour(String str) {
+    return str.length >= 3;
+  }
+
+   static String capitalizeFirstLetter(String str) {
+    if (str.isEmpty) {
+      return str;
+    }
+    return str[0].toUpperCase() + str.substring(1);
+  }
 
   
 }

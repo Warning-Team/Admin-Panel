@@ -1,7 +1,10 @@
 import 'package:admin_panel/controllers/users_controller.dart';
 import 'package:admin_panel/views/widgets/user_items/add_user.dart';
+import 'package:admin_panel/views/widgets/user_items/show_user.dart';
+import 'package:flutter/cupertino.dart';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class UsersScreen extends StatefulWidget {
   const UsersScreen({super.key});
@@ -16,7 +19,9 @@ class _UsersScreenState extends State<UsersScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.white,
       appBar: AppBar(
+        centerTitle: true,
         title: const Text(
           "Ishchilar",
         ),
@@ -43,22 +48,10 @@ class _UsersScreenState extends State<UsersScreen> {
 
           final users = snapshot.data!;
           return ListView.builder(
+            padding: EdgeInsets.all(10.w),
             itemCount: users.length,
             itemBuilder: (ctx, index) {
-              return ListTile(
-                leading: CircleAvatar(
-                  child: Image.asset(
-                    "assets/profile_images/man.png",
-                    fit: BoxFit.cover,
-                  ),
-                ),
-                title: Text(
-                  "${users[index].name} ${users[index].surname}",
-                ),
-                subtitle: Text(
-                  users[index].id.toString(),
-                ),
-              );
+              return ShowUser(user: users[index]);
             },
           );
         },
