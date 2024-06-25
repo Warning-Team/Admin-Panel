@@ -1,6 +1,8 @@
+import 'package:admin_panel/services/request_http_serrvice.dart';
+import 'package:admin_panel/views/screens/add_dit_request_screen.dart';
+import 'package:flutter/material.dart';
 import 'package:admin_panel/models/user.dart';
 import 'package:admin_panel/views/screens/request_detail_screen.dart';
-import 'package:flutter/material.dart';
 
 class RequestsScreen extends StatefulWidget {
   const RequestsScreen({super.key});
@@ -10,6 +12,7 @@ class RequestsScreen extends StatefulWidget {
 }
 
 class _RequestsScreenState extends State<RequestsScreen> {
+  final RequestsHttpService _requestsHttpService = RequestsHttpService();
   List<User> users = [];
 
   @override
@@ -53,6 +56,11 @@ class _RequestsScreenState extends State<RequestsScreen> {
     ];
   }
 
+  void _deleteRequest(String requestId) async {
+    await _requestsHttpService.deleteRequest(requestId);
+    setState(() {});
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -60,6 +68,19 @@ class _RequestsScreenState extends State<RequestsScreen> {
         title: const Text("Request Screen"),
         centerTitle: true,
         backgroundColor: Colors.lightBlue.shade100,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.add),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => const AddEditRequestScreen(),
+                ),
+              ).then((_) => setState(() {}));
+            },
+          ),
+        ],
       ),
       body: ListView.builder(
         itemCount: users.length,
@@ -80,6 +101,10 @@ class _RequestsScreenState extends State<RequestsScreen> {
               child: ListTile(
                 title: Text('${user.name} ${user.surname}'),
                 subtitle: Text(user.workPlace),
+                trailing: IconButton(
+                  icon: const Icon(Icons.delete),
+                  onPressed: () => _deleteRequest('request1'),
+                ),
               ),
             ),
           );
