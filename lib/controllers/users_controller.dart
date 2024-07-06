@@ -1,5 +1,5 @@
 import 'package:admin_panel/models/user.dart';
-import 'package:admin_panel/services/users_http_service.dart';
+import 'package:admin_panel/services/http_services/users_http_service.dart';
 
 class UsersController {
   final usersHttpService = UsersHttpService();

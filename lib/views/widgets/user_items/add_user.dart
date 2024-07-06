@@ -1,7 +1,7 @@
 import 'dart:math';
 
 import 'package:admin_panel/models/user.dart';
-import 'package:admin_panel/services/users_http_service.dart';
+import 'package:admin_panel/services/http_services/users_http_service.dart';
 import 'package:admin_panel/utils/inputvalidatsiya.dart';
 import 'package:admin_panel/utils/make_user_to_add.dart';
 import 'package:admin_panel/utils/user_input_validation.dart';
@@ -31,11 +31,12 @@ class _AddUserState extends State<AddUser> {
       password: "",
       role: "");
 
-  saveUser() {
+  saveUser()async {
     final makeUser = MakeUserToAdd();
     _formKey.currentState!.save();
-    User makedUser = makeUser.makeUser(user);
+    User makedUser =await makeUser.makeUser(user);
     Navigator.pop(context);
+
     usersHttpService.postUser(makedUser);
     setState(() {});
     showDialog(
@@ -136,32 +137,6 @@ class _AddUserState extends State<AddUser> {
                           onSaved: (value) {
                             user.surname = value!;
                           },
-                        ),
-                        SizedBox(height: 16.h),
-                        TextFormField(
-                          keyboardType: TextInputType.number,
-                          decoration: const InputDecoration(
-                            border: OutlineInputBorder(),
-                            labelText: 'Hodim uchun ID kiriting (12345)',
-                          ),
-                          validator: (value) {
-                            if (UserInputValidation().checkId(value!) == 1) {
-                              return "Ushbu ID boshqa foydalanuvchida ishlatilgan";
-                            }
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                value.length != 5 ||
-                                !Validate.isInteger(value) ||
-                                idChecker.checkId(value) == 1) {
-                              return "Hodim ID' sini to'g'ri kriting";
-                            } else {
-                              return null;
-                            }
-                          },
-                          onSaved: (value) {
-                            user.id = int.parse(value!);
-                          },
-                          onChanged: (value) {},
                         ),
                         SizedBox(height: 16.h),
                         TextFormField(
