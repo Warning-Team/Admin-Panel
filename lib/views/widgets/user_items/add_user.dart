@@ -1,5 +1,4 @@
-import 'dart:math';
-
+import 'package:admin_panel/controllers/auth_controller.dart';
 import 'package:admin_panel/models/user.dart';
 import 'package:admin_panel/services/http_services/users_http_service.dart';
 import 'package:admin_panel/utils/inputvalidatsiya.dart';
@@ -17,6 +16,7 @@ class AddUser extends StatefulWidget {
 }
 
 class _AddUserState extends State<AddUser> {
+  final authController = AuthController();
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final usersHttpService = UsersHttpService();
   final idChecker = UserInputValidation();
@@ -31,11 +31,15 @@ class _AddUserState extends State<AddUser> {
       password: "",
       role: "");
 
-  saveUser()async {
+  saveUser() async {
     final makeUser = MakeUserToAdd();
     _formKey.currentState!.save();
-    User makedUser =await makeUser.makeUser(user);
+    User makedUser = await makeUser.makeUser(user);
     Navigator.pop(context);
+    authController.register(
+      "${makedUser.name}${makedUser.surname}@gmail.com",
+      makedUser.password,
+    );
 
     usersHttpService.postUser(makedUser);
     setState(() {});
@@ -52,6 +56,9 @@ class _AddUserState extends State<AddUser> {
                 ),
                 Text(
                   "Yangi foydalanuvchi uchun parol: ${makedUser.password}",
+                ),
+                Text(
+                  "Yangi foydalanuvchi Id' si: ${makedUser.id}",
                 ),
               ],
             ),
