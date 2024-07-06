@@ -51,7 +51,14 @@ class _UsersScreenState extends State<UsersScreen> {
             padding: EdgeInsets.all(10.w),
             itemCount: users.length,
             itemBuilder: (ctx, index) {
-              return ShowUser(user: users[index]);
+              return Column(
+                children: [
+                  ShowUser(user: users[index]),
+                  SizedBox(
+                    height: 10.h,
+                  ),
+                ],
+              );
             },
           );
         },

@@ -1,6 +1,7 @@
 import 'package:admin_panel/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ShowUser extends StatefulWidget {
   User user;
@@ -26,18 +27,22 @@ class _ShowUserState extends State<ShowUser> {
           ),
         ],
       ),
-      child: ListTile(
-        leading: CircleAvatar(
-          backgroundColor: Colors.blue.shade200,
-          child: const Icon(
-            CupertinoIcons.profile_circled,
-            size: 45,
+      child: Column(
+        children: [
+          ListTile(
+            leading: CircleAvatar(
+              backgroundColor: Colors.blue.shade200,
+              child: const Icon(
+                CupertinoIcons.profile_circled,
+                size: 45,
+              ),
+            ),
+            title: Text("${widget.user.name} ${widget.user.surname}"),
+            subtitle: Text(
+              "Id:  ${widget.user.id}",
+            ),
           ),
-        ),
-        title: Text("${widget.user.name} ${widget.user.surname}"),
-        subtitle: Text(
-          "Id:  ${widget.user.id}",
-        ),
+        ],
       ),
     );
     ;

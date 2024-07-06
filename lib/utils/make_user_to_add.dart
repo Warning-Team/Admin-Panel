@@ -10,11 +10,13 @@ class MakeUserToAdd {
     }
   }
 
-  void makeUser(User user) {
+  User makeUser(User user) {
     user.name = Validate.capitalizeFirstLetter(user.name);
     user.surname = Validate.capitalizeFirstLetter(user.surname);
     user.role = Validate.capitalizeFirstLetter(user.role);
     user.workPlace = Validate.capitalizeFirstLetter(user.workPlace);
     user.password = user.name + getLastFourCharacters(user.phoneNumber);
+
+    return user;
   }
 }
