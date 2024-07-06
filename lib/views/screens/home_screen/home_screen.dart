@@ -1,6 +1,6 @@
-import 'package:admin_panel/views/screens/clients_screen.dart';
+import 'package:admin_panel/views/screens/clients/clients_screen.dart';
 import 'package:admin_panel/views/screens/reques_screen/requests.dart';
-import 'package:admin_panel/views/screens/users_screen.dart';
+import 'package:admin_panel/views/screens/users/users_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:gap/gap.dart';
