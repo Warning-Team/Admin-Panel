@@ -2,7 +2,7 @@ import 'package:admin_panel/services/request_http_serrvice.dart';
 import 'package:admin_panel/views/screens/add_dit_request_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:admin_panel/models/user.dart';
-import 'package:admin_panel/views/screens/request_detail_screen.dart';
+import 'package:admin_panel/views/screens/reques_screen/request_detail_screen.dart';
 
 class RequestsScreen extends StatefulWidget {
   const RequestsScreen({super.key});
