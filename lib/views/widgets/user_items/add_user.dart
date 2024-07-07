@@ -4,6 +4,8 @@ import 'package:admin_panel/services/http_services/users_http_service.dart';
 import 'package:admin_panel/utils/inputvalidatsiya.dart';
 import 'package:admin_panel/utils/make_user_to_add.dart';
 import 'package:admin_panel/utils/user_input_validation.dart';
+import 'package:firebase_auth/firebase_auth.dart' as ath;
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -20,7 +22,7 @@ class _AddUserState extends State<AddUser> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final usersHttpService = UsersHttpService();
   final idChecker = UserInputValidation();
-  final User user = User(id: 0, apiId: "userApiId", name: "", surname: "", phoneNumber: "", workPlace: "", login: "", password: "", role: "");
+  final User user = User(id: 0, apiId: "userApiId", name: "", surname: "", phoneNumber: "", workPlace: "", login: "", password: "", role: "", uId: "");
 
   saveUser() async {
     final makeUser = MakeUserToAdd();
@@ -28,11 +30,12 @@ class _AddUserState extends State<AddUser> {
     User makedUser = await makeUser.makeUser(user);
 
     Navigator.pop(context);
-    authController.register(
+    await authController.register(
       "${makedUser.name}${makedUser.surname}@gmail.com",
       makedUser.password,
     );
-
+    user.uId = ath.FirebaseAuth.instance.currentUser!.uid;
+    await ath.FirebaseAuth.instance.signOut();
     usersHttpService.postUser(makedUser);
     setState(() {});
     showDialog(

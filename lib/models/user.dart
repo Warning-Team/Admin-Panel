@@ -13,6 +13,7 @@ class User {
   String login;
   String password;
   String role;
+  String uId;
 
   User({
     required this.id,
@@ -24,10 +25,11 @@ class User {
     required this.login,
     required this.password,
     required this.role,
+    required this.uId,
   });
 
-  factory User.fromJson(String apId,Map<String, dynamic> json) {
-    return _$UserFromJson(apId,json);
+  factory User.fromJson(String apId, Map<String, dynamic> json) {
+    return _$UserFromJson(apId, json);
   }
 
   Map<String, dynamic> toJson() {
