@@ -57,8 +57,10 @@ class _AddUserState extends State<AddUser> {
           ),
           actions: [
             IconButton(
-                onPressed: () {},
-                icon: Icon(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
                   Icons.check,
                 )),
           ],
