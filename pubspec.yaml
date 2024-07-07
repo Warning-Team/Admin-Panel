@@ -45,6 +45,8 @@ dependencies:
   modal_bottom_sheet: ^3.0.0
   firebase_storage: ^12.1.0
   firebase_messaging: ^15.0.2
+  database: ^0.4.0
+  firebase_database: ^11.0.2
 
 dev_dependencies:
   flutter_test:
