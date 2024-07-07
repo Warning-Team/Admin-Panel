@@ -20,21 +20,13 @@ class _AddUserState extends State<AddUser> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final usersHttpService = UsersHttpService();
   final idChecker = UserInputValidation();
-  final User user = User(
-      id: 0,
-      apiId: "userApiId",
-      name: "",
-      surname: "",
-      phoneNumber: "",
-      workPlace: "",
-      login: "",
-      password: "",
-      role: "");
+  final User user = User(id: 0, apiId: "userApiId", name: "", surname: "", phoneNumber: "", workPlace: "", login: "", password: "", role: "");
 
   saveUser() async {
     final makeUser = MakeUserToAdd();
     _formKey.currentState!.save();
     User makedUser = await makeUser.makeUser(user);
+
     Navigator.pop(context);
     authController.register(
       "${makedUser.name}${makedUser.surname}@gmail.com",
@@ -98,8 +90,7 @@ class _AddUserState extends State<AddUser> {
                       children: [
                         const Text(
                           "Add User",
-                          style: TextStyle(
-                              fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
                         ),
                         SizedBox(height: 16.h),
                         TextFormField(
@@ -111,9 +102,7 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Ism',
                           ),
                           validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim ismini to'g'ri kriting";
                             } else {
                               return null;
@@ -133,9 +122,7 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Familiya',
                           ),
                           validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim familyasini to'g'ri kriting";
                             } else {
                               return null;
@@ -152,9 +139,7 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Hodim mansabini kiriting',
                           ),
                           validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim mansabini to'g'ri kriting";
                             } else {
                               return null;
@@ -171,9 +156,7 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Tumanni kiriting',
                           ),
                           validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
                               return "Ish joyini to'g'ri kriting";
                             } else {
                               return null;
@@ -190,9 +173,7 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Passport seriya',
                           ),
                           validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !Validate.passportSerialNumber(value)) {
+                            if (value == null || value.trim().isEmpty || !Validate.passportSerialNumber(value)) {
                               return "Passport seriya kriting";
                             } else {
                               return null;
@@ -209,9 +190,7 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Telefon raqam',
                           ),
                           validator: (value) {
-                            if (value == null ||
-                                value.trim().isEmpty ||
-                                !Validate.phone(value)) {
+                            if (value == null || value.trim().isEmpty || !Validate.phone(value)) {
                               return "Telefon raqam kriting";
                             } else {
                               return null;
