@@ -1,5 +1,5 @@
 import 'package:admin_panel/controllers/cilents_controller.dart';
-import 'package:admin_panel/views/screens/add_cilent_screen.dart';
+import 'package:admin_panel/views/screens/clients/add_cilent_screen.dart';
 import 'package:admin_panel/views/widgets/client_item/client_item.dart';
 import 'package:flutter/material.dart';
 
