@@ -35,9 +35,10 @@ class _AddUserState extends State<AddUser> {
       makedUser.password,
     );
     user.uId = ath.FirebaseAuth.instance.currentUser!.uid;
-    await ath.FirebaseAuth.instance.signOut();
     usersHttpService.postUser(makedUser);
     setState(() {});
+    await ath.FirebaseAuth.instance.signOut();
+
     showDialog(
       context: context,
       builder: (ctx) {
