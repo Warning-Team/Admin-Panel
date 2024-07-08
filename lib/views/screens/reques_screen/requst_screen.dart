@@ -3,6 +3,7 @@ import 'package:admin_panel/models/request.dart';
 import 'package:admin_panel/views/screens/reques_screen/add_new_request.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key});
@@ -33,6 +34,7 @@ class _RequestScreenState extends State<RequestScreen> {
           }
           final data = snapshot.data!.docs;
           return ListView.builder(
+            padding: EdgeInsets.all(10.w),
             itemCount: data.length,
             itemBuilder: (context, index) {
               final request = Request.fromQuery(data[index]);
