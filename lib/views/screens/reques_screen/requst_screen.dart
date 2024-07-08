@@ -1,7 +1,8 @@
-import 'package:admin_panel/views/widgets/for_request/custom_floatactbutton.dart';
+import 'package:admin_panel/controllers/request_controller.dart';
+import 'package:admin_panel/models/request.dart';
+import 'package:admin_panel/views/screens/reques_screen/add_new_request.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 class RequestScreen extends StatefulWidget {
   const RequestScreen({super.key});
@@ -11,6 +12,7 @@ class RequestScreen extends StatefulWidget {
 }
 
 class _RequestScreenState extends State<RequestScreen> {
+  RequestController requestController = RequestController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -24,10 +26,7 @@ class _RequestScreenState extends State<RequestScreen> {
         centerTitle: true,
       ),
       body: StreamBuilder<QuerySnapshot>(
-        stream: FirebaseFirestore.instance
-            .collection('entrepreneurs')
-            .orderBy('timestamp', descending: true)
-            .snapshots(),
+        stream: requestController.getReusets(),
         builder: (context, snapshot) {
           if (!snapshot.hasData) {
             return const Center(child: CircularProgressIndicator());
@@ -36,57 +35,14 @@ class _RequestScreenState extends State<RequestScreen> {
           return ListView.builder(
             itemCount: data.length,
             itemBuilder: (context, index) {
-              var entrepreneur = data[index];
-              return Padding(
-                padding: const EdgeInsets.all(20.0),
-                child: Container(
-                  width: double.infinity,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(12),
-                    color: Colors.blue,
+              final request = Request.fromQuery(data[index]);
+              return Card(
+                child: ListTile(
+                  title: Text(
+                    request.cId.toString(),
                   ),
-                  child: Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.all(10),
-                        child: Row(
-                          children: [
-                            const Icon(
-                              Icons.person,
-                              color: Colors.white,
-                            ),
-                            const SizedBox(width: 10),
-                            Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  entrepreneur['username'],
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                                Text(
-                                  entrepreneur['adminId'],
-                                  style: const TextStyle(color: Colors.white),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ),
-                      ),
-                      const Spacer(),
-                      IconButton(
-                        onPressed: () async {
-                          await FirebaseFirestore.instance
-                              .collection('entrepreneurs')
-                              .doc(entrepreneur.id)
-                              .delete();
-                        },
-                        icon: Icon(
-                          Icons.delete,
-                          color: Colors.red.shade300,
-                        ),
-                      ),
-                    ],
+                  subtitle: Text(
+                    request.eId.toString(),
                   ),
                 ),
               );
@@ -100,12 +56,7 @@ class _RequestScreenState extends State<RequestScreen> {
           borderRadius: BorderRadius.circular(40),
         ),
         onPressed: () {
-          showCupertinoModalBottomSheet(
-            context: context,
-            builder: (context) {
-              return const CustomFloatactbutton();
-            },
-          );
+          Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewRequest()));
         },
         child: const Icon(
           Icons.add,

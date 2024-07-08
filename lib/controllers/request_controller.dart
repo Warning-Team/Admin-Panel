@@ -1,47 +1,59 @@
 import 'dart:convert';
 import 'dart:io';
-import 'package:admin_panel/models/reques.dart';
+import 'package:admin_panel/models/request.dart';
+import 'package:admin_panel/utils/extentions/datetime_reformat.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
+import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
-import 'package:firebase_database/firebase_database.dart';
 
-class RequestController {
-  final FirebaseFirestore firestore = FirebaseFirestore.instance;
-  final FirebaseStorage storage = FirebaseStorage.instance;
-  final DatabaseReference database = FirebaseDatabase.instance.ref();
+class RequestController extends ChangeNotifier {
+  final firestore = FirebaseFirestore.instance.collection('requests');
 
-  Future<bool> isStirUnique(String stir) async {
-    final url = Uri.parse(
-        'https://savdosanoatapp-default-rtdb.firebaseio.com/clients.json?orderBy="stir"&equalTo=$stir');
+  Stream<QuerySnapshot<Map<String, dynamic>>> getReusets() {
+    return firestore.orderBy('date', descending: true).snapshots();
+  }
+
+  checkClient(String stir) async {
+    final url = Uri.parse('https://savdosanoatapp-default-rtdb.firebaseio.com/clients.json?orderBy="stir"&equalTo=$stir');
     final response = await http.get(url);
     if (response.statusCode == 200) {
-      final data = jsonDecode(response.body) as Map<String, dynamic>;
-      return data.isEmpty;
+      final data = jsonDecode(response.body) as Map;
+
+      if (data.isNotEmpty) {
+        return {
+          'isFind': true,
+          'status': data,
+        };
+      } else {
+        return {
+          'isFind': false,
+          'status': 'Malumot topilmadi',
+        };
+      }
     } else {
-      throw Exception('Failed to check STIR uniqueness');
+      return {
+        'isFind': false,
+        'status': 'Check your internet',
+      };
     }
   }
 
-  Future<void> addRequest(Request request) async {
-    List<String> imageUrls = [];
-    for (var imageFile in request.imageUrls) {
-      String fileName =
-          '${DateTime.now().millisecondsSinceEpoch}_${imageFile.split('/').last}';
-      Reference storageReference = storage.ref().child('images/$fileName');
-      UploadTask uploadTask = storageReference.putFile(File(imageFile));
-      TaskSnapshot taskSnapshot = await uploadTask;
-      String downloadUrl = await taskSnapshot.ref.getDownloadURL();
-      imageUrls.add(downloadUrl);
+  Stream<TaskSnapshot> addImageToFirestore(List<File> imageFiles, String companyName, String employeName) async* {
+    final fireStore = FirebaseStorage.instance;
+    final imagePath = fireStore.ref().child('requests').child(companyName).child("${DateTime.now().toFormattedDate()} $employeName");
+    for (var i = 0; i < imageFiles.length; i++) {
+      final uploadTask = imagePath.child("image$i.jpg").putFile(imageFiles[i]);
+      yield* uploadTask.snapshotEvents;
     }
+  }
 
-    await firestore.collection('requests').add({
-      'username': request.username,
-      'adminId': request.adminId,
-      'stir': request.stir,
-      'description': request.description,
-      'images': imageUrls,
-      'timestamp': FieldValue.serverTimestamp(),
-    });
+  Future<void> saveRequestToFirestore(Request request) async {
+    await firestore.add(request.toMap());
+  }
+
+  static getClientName(int cId) async {
+    final url = Uri.parse('https://savdosanoatapp-default-rtdb.firebaseio.com/clients.json?orderBy="id"&equalTo=$cId');
+    return "";
   }
 }

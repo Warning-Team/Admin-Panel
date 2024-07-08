@@ -22,8 +22,12 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return const ScreenUtilInit(
+    return ScreenUtilInit(
       child: MaterialApp(
+        theme: ThemeData(
+          scaffoldBackgroundColor: Colors.blue.shade100,
+          primaryColor: Colors.blue.shade100,
+        ),
         debugShowCheckedModeBanner: false,
         home: HomeScreen(),
       ),
