@@ -41,7 +41,5 @@ class UsersHttpService {
 
     // final data = jsonDecode(response.body);
   }
-  Future<User> editUser(User user) async {
 
-  }
 }
