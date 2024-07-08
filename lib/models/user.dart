@@ -14,6 +14,7 @@ class User {
   String password;
   String role;
   String uId;
+  String imageUrl;
 
   User({
     required this.id,
@@ -26,6 +27,7 @@ class User {
     required this.password,
     required this.role,
     required this.uId,
+    required this.imageUrl,
   });
 
   factory User.fromJson(String apId, Map<String, dynamic> json) {

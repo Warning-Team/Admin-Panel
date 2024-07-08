@@ -1,9 +1,12 @@
 import 'dart:convert';
 
 import 'package:admin_panel/models/user.dart';
+import 'package:firebase_auth/firebase_auth.dart' as ath;
 import 'package:http/http.dart' as http;
 
 class UsersHttpService {
+  final ath.FirebaseAuth userAuth = ath.FirebaseAuth.instance;
+
   Future<List<User>> getUsers() async {
     Uri url = Uri.parse(
       "https://savdosanoatapp-default-rtdb.firebaseio.com/users.json",
@@ -37,5 +40,8 @@ class UsersHttpService {
     }
 
     // final data = jsonDecode(response.body);
+  }
+  Future<User> editUser(User user) async {
+
   }
 }

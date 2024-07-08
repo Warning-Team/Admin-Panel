@@ -5,7 +5,6 @@ import 'package:admin_panel/utils/inputvalidatsiya.dart';
 import 'package:admin_panel/utils/make_user_to_add.dart';
 import 'package:admin_panel/utils/user_input_validation.dart';
 import 'package:firebase_auth/firebase_auth.dart' as ath;
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -22,55 +21,87 @@ class _AddUserState extends State<AddUser> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final usersHttpService = UsersHttpService();
   final idChecker = UserInputValidation();
-  final User user = User(id: 0, apiId: "userApiId", name: "", surname: "", phoneNumber: "", workPlace: "", login: "", password: "", role: "", uId: "");
+  final User user = User(
+      id: 0,
+      apiId: "userApiId",
+      name: "",
+      surname: "",
+      phoneNumber: "",
+      workPlace: "",
+      login: "",
+      password: "",
+      role: "",
+      uId: "",
+      imageUrl:
+          "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png");
 
   saveUser() async {
-    final makeUser = MakeUserToAdd();
-    _formKey.currentState!.save();
-    User makedUser = await makeUser.makeUser(user);
+    try {
+      final makeUser = MakeUserToAdd();
+      _formKey.currentState!.save();
+      User makedUser = await makeUser.makeUser(user);
 
-    Navigator.pop(context);
-    await authController.register(
-      "${makedUser.name}${makedUser.surname}@gmail.com",
-      makedUser.password,
-    );
-    user.uId = ath.FirebaseAuth.instance.currentUser!.uid;
-    usersHttpService.postUser(makedUser);
-    setState(() {});
-    await ath.FirebaseAuth.instance.signOut();
+      Navigator.pop(context);
+      await authController.register(
+        "${makedUser.name}${makedUser.surname}@gmail.com",
+        makedUser.password,
+      );
+      user.uId = ath.FirebaseAuth.instance.currentUser!.uid;
+      await usersHttpService.postUser(makedUser);
+      setState(() {});
+      await ath.FirebaseAuth.instance.signOut();
 
-    showDialog(
-      context: context,
-      builder: (ctx) {
-        return AlertDialog(
-          content: Center(
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text(
-                  "Yangi foydalanuvchi uchun login: ${makedUser.login}",
-                ),
-                Text(
-                  "Yangi foydalanuvchi uchun parol: ${makedUser.password}",
-                ),
-                Text(
-                  "Yangi foydalanuvchi Id' si: ${makedUser.id}",
-                ),
-              ],
+      showDialog(
+        context: context,
+        builder: (ctx) {
+          return AlertDialog(
+            content: Center(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text(
+                    "Yangi foydalanuvchi uchun login: ${makedUser.login}",
+                  ),
+                  Text(
+                    "Yangi foydalanuvchi uchun parol: ${makedUser.password}",
+                  ),
+                  Text(
+                    "Yangi foydalanuvchi Id' si: ${makedUser.id}",
+                  ),
+                ],
+              ),
             ),
-          ),
-          actions: [
-            IconButton(
+            actions: [
+              IconButton(
                 onPressed: () {
                   Navigator.pop(context);
                 },
                 icon: const Icon(
                   Icons.check,
-                )),
-          ],
-        );
-      },
-    );
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: Text(
+                      "Xatolik: $e",
+                    ),
+                  )
+                ],
+              ),
+            );
+          });
+    }
   }
 
   @override
@@ -96,7 +127,10 @@ class _AddUserState extends State<AddUser> {
                       children: [
                         const Text(
                           "Add User",
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         SizedBox(height: 16.h),
                         TextFormField(
@@ -108,7 +142,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Ism',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim ismini to'g'ri kriting";
                             } else {
                               return null;
@@ -128,7 +164,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Familiya',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim familyasini to'g'ri kriting";
                             } else {
                               return null;
@@ -145,7 +183,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Hodim mansabini kiriting',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim mansabini to'g'ri kriting";
                             } else {
                               return null;
@@ -162,7 +202,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Tumanni kiriting',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.isLengthGreaterThanFour(value)) {
                               return "Ish joyini to'g'ri kriting";
                             } else {
                               return null;
@@ -179,7 +221,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Passport seriya',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.passportSerialNumber(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.passportSerialNumber(value)) {
                               return "Passport seriya kriting";
                             } else {
                               return null;
@@ -196,7 +240,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Telefon raqam',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.phone(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.phone(value)) {
                               return "Telefon raqam kriting";
                             } else {
                               return null;
