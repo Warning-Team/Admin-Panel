@@ -30,7 +30,7 @@ class _MyAppState extends State<MyApp> {
           primaryColor: Colors.blue.shade100,
         ),
         debugShowCheckedModeBanner: false,
-        home: HomeScreen(),
+        home: const HomeScreen(),
       ),
     );
   }

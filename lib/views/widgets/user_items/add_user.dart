@@ -5,7 +5,6 @@ import 'package:admin_panel/utils/inputvalidatsiya.dart';
 import 'package:admin_panel/utils/make_user_to_add.dart';
 import 'package:admin_panel/utils/user_input_validation.dart';
 import 'package:firebase_auth/firebase_auth.dart' as ath;
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -29,6 +28,7 @@ class _AddUserState extends State<AddUser> {
     _formKey.currentState!.save();
     User makedUser = await makeUser.makeUser(user);
 
+    // ignore: use_build_context_synchronously
     Navigator.pop(context);
     await authController.register(
       "${makedUser.name}${makedUser.surname}@gmail.com",
@@ -40,6 +40,7 @@ class _AddUserState extends State<AddUser> {
     await ath.FirebaseAuth.instance.signOut();
 
     showDialog(
+      // ignore: use_build_context_synchronously
       context: context,
       builder: (ctx) {
         return AlertDialog(

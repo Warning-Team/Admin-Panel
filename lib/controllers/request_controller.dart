@@ -53,6 +53,7 @@ class RequestController extends ChangeNotifier {
   }
 
   static getClientName(int cId) async {
+    // ignore: unused_local_variable
     final url = Uri.parse('https://savdosanoatapp-default-rtdb.firebaseio.com/clients.json?orderBy="id"&equalTo=$cId');
     return "";
   }

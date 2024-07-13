@@ -1,8 +1,8 @@
 import 'package:admin_panel/models/user.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+// ignore: must_be_immutable
 class ShowUser extends StatefulWidget {
   User user;
   ShowUser({super.key, required this.user});
@@ -45,6 +45,6 @@ class _ShowUserState extends State<ShowUser> {
         ],
       ),
     );
-    ;
+    
   }
 }
