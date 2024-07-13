@@ -22,7 +22,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
         backgroundColor: Colors.blue.shade700,
       ),
       body: FutureBuilder(
-        future: cilentsController.clientsHttpService.getData(),
+        future: cilentsController.cilentsHttpService.getData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
