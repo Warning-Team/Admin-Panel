@@ -16,4 +16,17 @@ class UserInputValidation {
       return 1;
     }
   }
+  Future checkIdClient(String id) async {
+    Uri url = Uri.parse(
+      "https://savdosanoatapp-default-rtdb.firebaseio.com/clients.json?orderBy=%22id%22&equalTo=$id",
+    );
+
+    final response = await http.get(url);
+    final data = jsonDecode(response.body) as Map;
+    if (data.isEmpty) {
+      return 0;
+    } else {
+      return 1;
+    }
+  }
 }

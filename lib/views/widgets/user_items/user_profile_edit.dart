@@ -16,6 +16,12 @@ class UserProfileEdit extends StatefulWidget {
 }
 
 class _UserProfileEditState extends State<UserProfileEdit> {
+  final nameController = TextEditingController();
+  final roleController = TextEditingController();
+  final phoneController = TextEditingController();
+  final placeController = TextEditingController();
+  final loginController = TextEditingController();
+  final passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -48,19 +54,35 @@ class _UserProfileEditState extends State<UserProfileEdit> {
                 children: [
                   SizedBox(height: 16.h),
                   ProfileEdit(
-                      title: 'Ism va familiya',
-                      value: '${widget.user.name} ${widget.user.surname}'),
+                    title: 'Ism va familiya',
+                    controller: nameController,
+                  ),
                   SizedBox(height: 16),
-                  ProfileEdit(title: 'Ishchi mansabi', value: widget.user.role),
+                  ProfileEdit(
+                    title: 'Ishchi mansabi',
+                    controller: roleController,
+                  ),
                   SizedBox(height: 16.h),
                   ProfileEdit(
-                      title: 'Telefon raqam', value: widget.user.phoneNumber),
+                    title: 'Telefon raqam',
+                    controller: phoneController,
+                  ),
                   SizedBox(height: 16.h),
-                  ProfileEdit(title: 'Ish joyi', value: widget.user.workPlace),
+                  ProfileEdit(
+                    title: 'Ish joyi',
+                    controller: placeController,
+                  ),
                   SizedBox(height: 16.h),
-                  ProfileEdit(title: 'Login', value: widget.user.login),
+                  ProfileEdit(
+                    title: 'Login',
+                    controller: loginController,
+                  ),
                   SizedBox(height: 16.h),
-                  ProfileEdit(title: 'Parol', value: widget.user.password),
+                  ProfileEdit(
+                    title: 'Parol',
+                    controller: passwordController,
+                    
+                  ),
                   SizedBox(height: 16.h),
                 ],
               ),

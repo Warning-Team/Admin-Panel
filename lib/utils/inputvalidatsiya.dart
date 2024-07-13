@@ -29,6 +29,14 @@ abstract class Validate {
     return str.length >= 3;
   }
 
+   static bool isLengthGreaterThan14(String str) {
+    return str.length >= 14;
+  }
+
+  static bool isLengthGreaterThanFive(String str) {
+    return str.length >= 5;
+  }
+
    static String capitalizeFirstLetter(String str) {
     if (str.isEmpty) {
       return str;
