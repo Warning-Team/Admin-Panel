@@ -21,14 +21,26 @@ class _AddUserState extends State<AddUser> {
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   final usersHttpService = UsersHttpService();
   final idChecker = UserInputValidation();
-  final User user = User(id: 0, apiId: "userApiId", name: "", surname: "", phoneNumber: "", workPlace: "", login: "", password: "", role: "", uId: "");
+  final User user = User(
+      id: 0,
+      apiId: "userApiId",
+      name: "",
+      surname: "",
+      phoneNumber: "",
+      workPlace: "",
+      login: "",
+      password: "",
+      role: "",
+      uId: "",
+      imageUrl:
+          "https://images.rawpixel.com/image_png_800/cHJpdmF0ZS9sci9pbWFnZXMvd2Vic2l0ZS8yMDIzLTAxL3JtNjA5LXNvbGlkaWNvbi13LTAwMi1wLnBuZw.png");
 
   saveUser() async {
-    final makeUser = MakeUserToAdd();
-    _formKey.currentState!.save();
-    User makedUser = await makeUser.makeUser(user);
+    try {
+      final makeUser = MakeUserToAdd();
+      _formKey.currentState!.save();
+      User makedUser = await makeUser.makeUser(user);
 
-    // ignore: use_build_context_synchronously
     Navigator.pop(context);
     await authController.register(
       "${makedUser.name}${makedUser.surname}@gmail.com",
@@ -40,7 +52,6 @@ class _AddUserState extends State<AddUser> {
     await ath.FirebaseAuth.instance.signOut();
 
     showDialog(
-      // ignore: use_build_context_synchronously
       context: context,
       builder: (ctx) {
         return AlertDialog(
@@ -67,11 +78,30 @@ class _AddUserState extends State<AddUser> {
                 },
                 icon: const Icon(
                   Icons.check,
-                )),
-          ],
-        );
-      },
-    );
+                ),
+              ),
+            ],
+          );
+        },
+      );
+    } catch (e) {
+      showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              content: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Center(
+                    child: Text(
+                      "Xatolik: $e",
+                    ),
+                  )
+                ],
+              ),
+            );
+          });
+    }
   }
 
   @override
@@ -97,7 +127,10 @@ class _AddUserState extends State<AddUser> {
                       children: [
                         const Text(
                           "Add User",
-                          style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+                          style: TextStyle(
+                            fontSize: 24,
+                            fontWeight: FontWeight.bold,
+                          ),
                         ),
                         SizedBox(height: 16.h),
                         TextFormField(
@@ -109,7 +142,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Ism',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim ismini to'g'ri kriting";
                             } else {
                               return null;
@@ -129,7 +164,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Familiya',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim familyasini to'g'ri kriting";
                             } else {
                               return null;
@@ -146,7 +183,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Hodim mansabini kiriting',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.isLengthGreaterThanFour(value)) {
                               return "Hodim mansabini to'g'ri kriting";
                             } else {
                               return null;
@@ -163,7 +202,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Tumanni kiriting',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.isLengthGreaterThanFour(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.isLengthGreaterThanFour(value)) {
                               return "Ish joyini to'g'ri kriting";
                             } else {
                               return null;
@@ -180,7 +221,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Passport seriya',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.passportSerialNumber(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.passportSerialNumber(value)) {
                               return "Passport seriya kriting";
                             } else {
                               return null;
@@ -197,7 +240,9 @@ class _AddUserState extends State<AddUser> {
                             labelText: 'Telefon raqam',
                           ),
                           validator: (value) {
-                            if (value == null || value.trim().isEmpty || !Validate.phone(value)) {
+                            if (value == null ||
+                                value.trim().isEmpty ||
+                                !Validate.phone(value)) {
                               return "Telefon raqam kriting";
                             } else {
                               return null;

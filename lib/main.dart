@@ -25,7 +25,10 @@ class _MyAppState extends State<MyApp> {
     return ScreenUtilInit(
       child: MaterialApp(
         theme: ThemeData(
-          appBarTheme: AppBarTheme(backgroundColor: Colors.blue.shade400),
+          appBarTheme: AppBarTheme(
+            backgroundColor: Colors.blue.shade400,
+            centerTitle: true,
+          ),
           scaffoldBackgroundColor: Colors.blue.shade100,
           primaryColor: Colors.blue.shade100,
         ),

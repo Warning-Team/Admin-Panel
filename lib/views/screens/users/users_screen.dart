@@ -1,4 +1,5 @@
 import 'package:admin_panel/controllers/users_controller.dart';
+import 'package:admin_panel/views/screens/home_screen/home_screen.dart';
 import 'package:admin_panel/views/widgets/user_items/add_user.dart';
 import 'package:admin_panel/views/widgets/user_items/show_user.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,6 +21,21 @@ class _UsersScreenState extends State<UsersScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: IconButton(
+          onPressed: () {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (ctx) {
+                  return HomeScreen();
+                },
+              ),
+            );
+          },
+          icon: Icon(
+            Icons.arrow_back,
+          ),
+        ),
         centerTitle: true,
         title: const Text(
           "Ishchilar",
