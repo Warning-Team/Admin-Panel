@@ -1,5 +1,3 @@
-
-
 import 'package:json_annotation/json_annotation.dart';
 
 part 'client.g.dart';
@@ -22,7 +20,7 @@ class Client {
     required this.phoneNumber,
   });
 
-  factory Client.fromJson(String apiId, Map<String, dynamic> json) {
+  factory Client.fromJson(String apiId, Map<dynamic, dynamic> json) {
     return _$ClientFromJson(apiId, json);
   }
 

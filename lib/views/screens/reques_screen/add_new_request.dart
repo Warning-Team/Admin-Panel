@@ -1,6 +1,7 @@
 import 'dart:io';
 import 'package:admin_panel/controllers/request_controller.dart';
 import 'package:admin_panel/models/request.dart';
+import 'package:admin_panel/services/location_service.dart';
 import 'package:admin_panel/views/widgets/loding_widget.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
@@ -58,6 +59,8 @@ class _AddNewRequestState extends State<AddNewRequest> {
         }
       }
 
+      final location = await LocationService.getCurrentLocation();
+
       // Create a new request
       final request = Request(
         eId: 77777,
@@ -67,6 +70,8 @@ class _AddNewRequestState extends State<AddNewRequest> {
         imageUrls: imageUrls,
         id: id,
         fId: "",
+        lat: location!.latitude!,
+        long: location.longitude!,
       );
 
       // Save the request to Firestore

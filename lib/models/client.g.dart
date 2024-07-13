@@ -6,7 +6,7 @@ part of 'client.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-Client _$ClientFromJson(String apiId, Map<String, dynamic> json) {
+Client _$ClientFromJson(String apiId, Map<dynamic, dynamic> json) {
   Client client = Client(
     id: json['id'].toString(),
     apiId: apiId,

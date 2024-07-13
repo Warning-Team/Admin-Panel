@@ -47,6 +47,8 @@ dependencies:
   firebase_messaging: ^15.0.2
   database: ^0.4.0
   firebase_database: ^11.0.2
+  url_launcher: ^6.3.0
+  location: ^6.0.2
 
 dev_dependencies:
   flutter_test:
