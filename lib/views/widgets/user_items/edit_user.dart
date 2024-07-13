@@ -1,28 +1,27 @@
 import 'package:flutter/material.dart';
 
 class ProfileEdit extends StatelessWidget {
-
   final String title;
-  final String value;
 
-  ProfileEdit({
-    required this.title,
-    required this.value,
-  });
+  TextEditingController controller;
+
+  ProfileEdit(
+      {required this.title, required this.controller});
 
   @override
   Widget build(BuildContext context) {
-    final phoneController = TextEditingController();
-    final placeController = TextEditingController();
-    final loginController = TextEditingController();
-    final passwordController = TextEditingController();
     return TextFormField(
-      initialValue: value,
+      controller: controller,
       decoration: InputDecoration(
-          label: Text(
-            title,
-          ),
-          border: OutlineInputBorder(),),
+        label: Text(
+          title,
+        ),
+        border: OutlineInputBorder(),
+      ),
     );
+  }
+
+ static String returnValue(String value){
+    return value;
   }
 }

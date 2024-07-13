@@ -20,9 +20,7 @@ class MakeUserToAdd {
     user.role = Validate.capitalizeFirstLetter(user.role);
     user.workPlace = Validate.capitalizeFirstLetter(user.workPlace);
     user.password = user.name + getLastFourCharacters(user.phoneNumber);
-    print("object 1");
     user.id = await makeId();
-    print("object 2");
     return user;
   }
 

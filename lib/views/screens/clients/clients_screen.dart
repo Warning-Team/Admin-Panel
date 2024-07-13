@@ -1,5 +1,5 @@
 import 'package:admin_panel/controllers/cilents_controller.dart';
-import 'package:admin_panel/views/screens/clients/add_cilent_screen.dart';
+import 'package:admin_panel/views/widgets/client_item/add_client.dart';
 import 'package:admin_panel/views/widgets/client_item/client_item.dart';
 import 'package:flutter/material.dart';
 
@@ -22,7 +22,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
         backgroundColor: Colors.blue.shade700,
       ),
       body: FutureBuilder(
-        future: cilentsController.cilentsHttpService.getData(),
+        future: cilentsController.clientsHttpService.getData(),
         builder: (context, snapshot) {
           if (snapshot.connectionState == ConnectionState.waiting) {
             return Center(
@@ -49,17 +49,7 @@ class _ClientsScreenState extends State<ClientsScreen> {
               });
         },
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const AddCilentScreen(),
-            ),
-          );
-        },
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: AddClient(),
     );
   }
 }
