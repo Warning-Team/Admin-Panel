@@ -57,4 +57,10 @@ class RequestController extends ChangeNotifier {
     final url = Uri.parse('https://savdosanoatapp-default-rtdb.firebaseio.com/clients.json?orderBy="id"&equalTo=$cId');
     return "";
   }
+
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getRequests(int eId) {
+    final firestore = FirebaseFirestore.instance.collection('requests');
+
+    return firestore.where('eId', isEqualTo: eId).orderBy('date', descending: true).snapshots();
+  }
 }
