@@ -17,4 +17,15 @@ class CilentsController {
       };
     }
   }
+
+  static Future<String> getClinetNameById(int cId) async {
+    final url = Uri.parse('https://savdosanoatapp-default-rtdb.firebaseio.com/clients.json?orderBy="id"&equalTo=$cId');
+    final response = await http.get(url);
+    if (response.statusCode == 200) {
+      final data = jsonDecode(response.body) as Map;
+      return data.values.first['companyName'];
+    } else {
+      return "malumot topilmadi";
+    }
+  }
 }

@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_constructors
 
+import 'package:admin_panel/controllers/cilents_controller.dart';
 import 'package:admin_panel/controllers/request_controller.dart';
 import 'package:admin_panel/models/request.dart';
 import 'package:admin_panel/models/user.dart';
@@ -128,7 +129,7 @@ class UserProfileScreen extends StatelessWidget {
                 if (snapshot.hasError) {
                   return const Center(child: Text("Malumot olishda xato"));
                 }
-                if (!snapshot.hasData || snapshot.data!.docs.isEmpty) {
+                if (!snapshot.hasData || snapshot.data!.docs.isEmpty || snapshot.data == null) {
                   return const Center(child: Text("Malumot mavjud emas"));
                 }
                 final requests = snapshot.data!.docs;
@@ -148,7 +149,20 @@ class UserProfileScreen extends StatelessWidget {
                             ),
                           );
                         },
-                        title: Text(request.cId.toString()),
+                        title: FutureBuilder(
+                          initialData: 'Company Name',
+                          future: CilentsController.getClinetNameById(request.cId),
+                          builder: (context, snapshot) {
+                            if (snapshot.connectionState == ConnectionState.waiting) {
+                              return Text("Company Name");
+                            }
+                            if (snapshot.hasError || snapshot.data == null) {
+                              return Text("Malumot olishda xato");
+                            }
+
+                            return Text(snapshot.data!);
+                          },
+                        ),
                         subtitle: Text(request.date.toFormattedDate()),
                       ),
                     );

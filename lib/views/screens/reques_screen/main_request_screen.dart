@@ -1,5 +1,7 @@
+import 'package:admin_panel/controllers/cilents_controller.dart';
 import 'package:admin_panel/controllers/request_controller.dart';
 import 'package:admin_panel/models/request.dart';
+import 'package:admin_panel/utils/extentions/datetime_reformat.dart';
 import 'package:admin_panel/views/screens/reques_screen/add_new_request.dart';
 import 'package:admin_panel/views/screens/reques_screen/request_screen.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -18,9 +20,7 @@ class _MainRequestScreenState extends State<MainRequestScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.blue.shade100,
       appBar: AppBar(
-        backgroundColor: Colors.blue,
         title: const Text(
           "Requests",
           style: TextStyle(color: Colors.white),
@@ -30,8 +30,14 @@ class _MainRequestScreenState extends State<MainRequestScreen> {
       body: StreamBuilder<QuerySnapshot>(
         stream: requestController.getReusets(),
         builder: (context, snapshot) {
-          if (!snapshot.hasData) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
             return const Center(child: CircularProgressIndicator());
+          }
+          if (snapshot.hasError) {
+            return const Center(child: Text("Malumot olishda hatolik"));
+          }
+          if (!snapshot.hasData || snapshot.data == null || snapshot.data!.docs.isEmpty) {
+            return Center(child: Text("malumot mavjud emas"));
           }
           final data = snapshot.data!.docs;
           return ListView.builder(
@@ -50,11 +56,22 @@ class _MainRequestScreenState extends State<MainRequestScreen> {
                           ),
                         ));
                   },
-                  title: Text(
-                    request.cId.toString(),
+                  title: FutureBuilder(
+                    initialData: 'Company Name',
+                    future: CilentsController.getClinetNameById(request.cId),
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        return Text("Company Name");
+                      }
+                      if (snapshot.hasError || snapshot.data == null) {
+                        return Text("Malumot olishda xato");
+                      }
+
+                      return Text(snapshot.data!);
+                    },
                   ),
                   subtitle: Text(
-                    request.eId.toString(),
+                    request.date.toFormattedDate(),
                   ),
                 ),
               );
