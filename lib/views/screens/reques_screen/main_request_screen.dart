@@ -1,9 +1,11 @@
 import 'package:admin_panel/controllers/cilents_controller.dart';
 import 'package:admin_panel/controllers/request_controller.dart';
 import 'package:admin_panel/models/request.dart';
+import 'package:admin_panel/services/excel_service.dart';
 import 'package:admin_panel/utils/extentions/datetime_reformat.dart';
 import 'package:admin_panel/views/screens/reques_screen/add_new_request.dart';
 import 'package:admin_panel/views/screens/reques_screen/request_screen.dart';
+import 'package:admin_panel/views/widgets/loding_widget.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -26,6 +28,16 @@ class _MainRequestScreenState extends State<MainRequestScreen> {
           style: TextStyle(color: Colors.white),
         ),
         centerTitle: true,
+        actions: [
+          IconButton(
+              onPressed: () async {
+                LodingWidget.showLoadingDialog(context);
+                final requests = await requestController.getRequestsFuture();
+                await ExcelService.createExcelFile(requests);
+                Navigator.pop(context);
+              },
+              icon: Icon(Icons.download))
+        ],
       ),
       body: StreamBuilder<QuerySnapshot>(
         stream: requestController.getReusets(),
@@ -36,7 +48,9 @@ class _MainRequestScreenState extends State<MainRequestScreen> {
           if (snapshot.hasError) {
             return const Center(child: Text("Malumot olishda hatolik"));
           }
-          if (!snapshot.hasData || snapshot.data == null || snapshot.data!.docs.isEmpty) {
+          if (!snapshot.hasData ||
+              snapshot.data == null ||
+              snapshot.data!.docs.isEmpty) {
             return Center(child: Text("malumot mavjud emas"));
           }
           final data = snapshot.data!.docs;
@@ -85,7 +99,8 @@ class _MainRequestScreenState extends State<MainRequestScreen> {
           borderRadius: BorderRadius.circular(40),
         ),
         onPressed: () {
-          Navigator.push(context, MaterialPageRoute(builder: (context) => AddNewRequest()));
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => AddNewRequest()));
         },
         child: const Icon(
           Icons.add,

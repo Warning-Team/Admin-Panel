@@ -1,5 +1,6 @@
 import 'package:admin_panel/firebase_options.dart';
 import 'package:admin_panel/services/location_service.dart';
+import 'package:admin_panel/services/permition_service.dart';
 import 'package:admin_panel/views/screens/home_screen/home_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -12,6 +13,7 @@ void main() async {
   );
 
   await LocationService.init();
+  await UserPermission.requestPermission();
   runApp(const MyApp());
 }
 
