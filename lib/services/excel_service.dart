@@ -36,7 +36,7 @@ class ExcelService {
           ],
         );
       }
-      final directory = await getExternalStorageDirectory();
+      final directory =  Directory("storage/emulated/0/documents"); //
       if (directory == null) {
         throw Exception('Could not get the external storage directory');
       }
