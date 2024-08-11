@@ -30,7 +30,7 @@ class ExcelService {
           [
             TextCellValue(request.id.toString()),
             TextCellValue(request.description),
-            TextCellValue(stir),
+            TextCellValue(stir),  
             TextCellValue(images),
             TextCellValue(request.date.toFormattedDate()),
           ],
@@ -48,7 +48,6 @@ class ExcelService {
 
       // Uncomment if you want to open the file automatically
       // final result = await OpenFile.open(path);
-      print('Excel file created at $path');
     } catch (e) {
       print('Error creating Excel file: $e');
     }
